@@ -19,6 +19,11 @@ app.use(helmet());
 import { dbConnection } from "./src/config/db.js";
 dbConnection()
 
+// Routers
+import AuthRoute from './src/routers/AuthRouter.js'
+app.use('/auth',AuthRoute)
+
+
 app.get('/',(req,res)=>{
      res.json({
         message:"You have reached the admin api"
