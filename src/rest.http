@@ -1,0 +1,17 @@
+###
+GET http://localhost:8000
+
+#### User API #####
+###
+GET http://localhost:8000/user/63bf6954d420c9f886afae0c
+###
+POST http://localhost:8000/user
+Content-Type: application/json
+
+{
+    "firstname":"Sulav",
+    "lastname":"Adhikari",
+    "username":"ad_sulav",
+    "password": "123456a"
+
+}
