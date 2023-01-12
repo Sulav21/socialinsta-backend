@@ -1,4 +1,5 @@
 import express from "express";
+import { hashPassword } from "../helpers/bycrypt.js";
 import { getUserById, insertUser } from "../models/user/User.Model.js";
 
 const router = express.Router();
@@ -9,6 +10,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    const hashedPassword = hashPassword(req.body.password)
+    req.body.password = hashedPassword
     const result = await insertUser(req.body);
     if (result?._id) {
       res.json({

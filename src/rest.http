@@ -9,7 +9,7 @@ POST http://localhost:8000/user
 Content-Type: application/json
 
 {
-    "firstname":"Sulav",
+    "firstname":"Saurab",
     "lastname":"Adhikari",
     "username":"ad_sulav",
     "password": "123456a"
