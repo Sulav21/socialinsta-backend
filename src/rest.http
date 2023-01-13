@@ -34,3 +34,6 @@ Content-Type: application/json
     "password":"123456a",
     "lastname":"DON"
 }
+
+###
+DELETE http://localhost:8000/user/63c0acbb158cd24d41da0b0b
