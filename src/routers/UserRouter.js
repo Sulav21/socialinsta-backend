@@ -124,69 +124,67 @@ router.delete("/:_id", async (req, res) => {
   }
 });
 
-router.put('/:_id/follow',async(req,res,next)=>{
+router.put("/:_id/follow", async (req, res, next) => {
   try {
-    const {_id} = req.params
-    const {currentId} = req.body
-    if(currentId===_id){
+    const { _id } = req.params;
+    const { currentId } = req.body;
+    if (currentId === _id) {
       res.status(403).json({
-        status:"error",
-        message:"Action forbidden"
-      })
-    }else{
-      const followUser = await getUserById(_id)
-      const followingUser = await getUserById(currentId)
-      if(!followUser.followers.includes(currentId)){
-           await followUser.updateOne({$push:{followers:currentId}})
-           await followingUser.updateOne({$push:{following:_id}})
-           res.status(200).json({
-            status:"success",
-            message:"User followed !"
-           })
-      }else{
+        status: "error",
+        message: "Action forbidden",
+      });
+    } else {
+      const followUser = await getUserById(_id);
+      const followingUser = await getUserById(currentId);
+      if (!followUser.followers.includes(currentId)) {
+        await followUser.updateOne({ $push: { followers: currentId } });
+        await followingUser.updateOne({ $push: { following: _id } });
+        res.status(200).json({
+          status: "success",
+          message: "User followed !",
+        });
+      } else {
         res.status(403).json({
-          status:"error",
-          message:"User already followed by you"
-        })
+          status: "error",
+          message: "User already followed by you",
+        });
       }
     }
-    
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // unfollowing a user
-router.put('/:_id/unfollow',async(req,res,next)=>{
+router.put("/:_id/unfollow", async (req, res, next) => {
   try {
-    const {_id} = req.params
-    const {currentId} = req.body
-    if(currentId===_id){
+    const { _id } = req.params;
+    const { currentId } = req.body;
+    if (currentId === _id) {
       res.status(403).json({
-        status:"error",
-        message:"Action forbidden"
-      })
-    }else{
-      const followUser = await getUserById(_id)
-      const followingUser = await getUserById(currentId)
-      if(followUser.followers.includes(currentId)){
-           await followUser.updateOne({$pull:{followers:currentId}})
-           await followingUser.updateOne({$pull:{following:_id}})
-           res.status(200).json({
-            status:"success",
-            message:"User unfollowed !"
-           })
-      }else{
+        status: "error",
+        message: "Action forbidden",
+      });
+    } else {
+      const followUser = await getUserById(_id);
+      const followingUser = await getUserById(currentId);
+      if (followUser.followers.includes(currentId)) {
+        await followUser.updateOne({ $pull: { followers: currentId } });
+        await followingUser.updateOne({ $pull: { following: _id } });
+        res.status(200).json({
+          status: "success",
+          message: "User unfollowed !",
+        });
+      } else {
         res.status(403).json({
-          status:"error",
-          message:"User is not followed by you"
-        })
+          status: "error",
+          message: "User is not followed by you",
+        });
       }
     }
-    
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 export default router;
