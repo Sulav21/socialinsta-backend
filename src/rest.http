@@ -91,10 +91,3 @@ Content-Type: application/json
     "userId":"63c64418f5c308435b3fe3fe"
 }
 
-###
-PUT http://localhost:8000/post/63c6577f427841b32a016445/dislike
-Content-Type: application/json
-
-{
-    "userId":"63c64432f5c308435b3fe402"
-}

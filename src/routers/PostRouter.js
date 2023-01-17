@@ -111,31 +111,16 @@ router.put('/:_id/like',async(req,res,next)=>{
          await findPost.updateOne({$push:{likes:userId}})
         res.status(200).json("post liked")
 
+        }else{
+            await findPost.updateOne({$pull:{likes:userId}})
+            res.status(200).json("post disliked")
         }
     } catch (error) {
         next(error)
     }
 })
 
-// dislike a post
-router.put('/:_id/dislike',async(req,res,next)=>{
-    try {
-        const {_id} = req.params
-        const {userId} = req.body
-        const post =  await getPostById(_id)
-        if(post.likes.includes(userId)){
-            await post.updateOne({$pull:{likes:userId}})
-            res.status(200).json("Post disliked !")
-        }else{
-            res.status(403).json({
-                status:"error",
-                message:"Post hasnot been liked, so it cant be disliked"
-            })
-        }
-    } catch (error) {
-        next(error)
-    }
-})
+
 
 
 export default router;
