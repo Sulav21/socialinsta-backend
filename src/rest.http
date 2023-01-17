@@ -9,9 +9,9 @@ POST http://localhost:8000/user
 Content-Type: application/json
 
 {
-    "firstname":"Saurab",
+    "firstname":"Bhim",
     "lastname":"Adhikari",
-    "username":"ad_sulav",
+    "username":"ad_bhim",
     "password": "123456a"
 
 }
@@ -37,3 +37,11 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:8000/user/63c0acbb158cd24d41da0b0b
+
+###
+PUT http://localhost:8000/user/63c64425f5c308435b3fe400/follow
+Content-Type: application/json
+
+{
+    "currentId":"63c64432f5c308435b3fe402"
+}
