@@ -25,6 +25,10 @@ dbConnection();
 import UserRouter from "./src/routers/UserRouter.js";
 app.use("/user", UserRouter);
 
+// Post router
+import PostRouter from './src/routers/PostRouter.js'
+app.use('/post',PostRouter)
+
 app.get("/", (req, res) => {
   res.json({
     message: "You have reached the admin api",

@@ -53,3 +53,6 @@ Content-Type: application/json
 {
     "currentId":"63c64432f5c308435b3fe402"
 }
+
+######## POST ROUTE ############
+GET http://localhost:8000/post
