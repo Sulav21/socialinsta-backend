@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPostById, insertPost } from '../models/post/Post.Model.js'
+import { getPostById, insertPost, updatePost } from '../models/post/Post.Model.js'
 
 const router = express.Router()
 
@@ -37,6 +37,37 @@ router.get("/:_id",async(req,res,next)=>{
             message:"Post doesn't exist, try again later"
             })
           }
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.put("/:_id", async(req,res,next)=>{
+    try {
+        const result = await getPostById(req.params._id)
+        const {userId, ...rest} = req.body
+        if(result.userId===userId){
+            const updatedPost = await updatePost(result._id,rest)
+            if(updatedPost?._id){
+                res.json({
+                    status:"success",
+                    message:"Post updated successfully",
+                    updatedPost
+                })
+            }else{
+                res.json({
+                    status:"error",
+                    message:"Couldn't update post"
+                })
+            }
+        }else{
+         res.json({
+            status:"error",
+            message:"Post not found !"
+         })
+        }
+
+        
     } catch (error) {
         next(error)
     }
