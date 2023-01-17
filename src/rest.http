@@ -55,4 +55,13 @@ Content-Type: application/json
 }
 
 ######## POST ROUTE ############
-GET http://localhost:8000/post
+GET http://localhost:8000/post/63c655ddf10c9032764c929f
+
+###
+POST http://localhost:8000/post
+Content-Type: application/json
+
+{
+    "userId":"63c64432f5c308435b3fe402",
+    "desc":"This is a fourth post"
+}
