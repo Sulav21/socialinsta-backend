@@ -9,8 +9,8 @@ export const getPostById=(_id)=>{
     return PostSchema.findById(_id)
 }
 
-export const getAllPost=()=>{
-    return PostSchema.find()
+export const getAllPost=(filter)=>{
+    return PostSchema.find(filter)
 }
 
 export const updatePost = (filter,obj)=>{

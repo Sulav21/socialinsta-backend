@@ -1,10 +1,13 @@
 import express from "express";
 import {
   deletePost,
+  getAllPost,
   getPostById,
   insertPost,
   updatePost,
 } from "../models/post/Post.Model.js";
+import UserSchema from "../models/user/User.Schema.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -102,25 +105,58 @@ router.delete("/:_id", async (req, res, next) => {
 });
 
 // like a post
-router.put('/:_id/like',async(req,res,next)=>{
-    try {
-        const {_id} = req.params
-        const {userId} = req.body
-        const findPost = await getPostById(_id)
-        if(!findPost.likes.includes(userId)){
-         await findPost.updateOne({$push:{likes:userId}})
-        res.status(200).json("post liked")
-
-        }else{
-            await findPost.updateOne({$pull:{likes:userId}})
-            res.status(200).json("post disliked")
-        }
-    } catch (error) {
-        next(error)
+router.put("/:_id/like", async (req, res, next) => {
+  try {
+    const { _id } = req.params;
+    const { userId } = req.body;
+    const findPost = await getPostById(_id);
+    if (!findPost.likes.includes(userId)) {
+      await findPost.updateOne({ $push: { likes: userId } });
+      res.status(200).json("post liked");
+    } else {
+      await findPost.updateOne({ $pull: { likes: userId } });
+      res.status(200).json("post disliked");
     }
-})
+  } catch (error) {
+    next(error);
+  }
+});
 
-
-
+// get all timeline posts
+router.get("/:_id/timeline", async (req, res, next) => {
+  try {
+    const { _id } = req.params;
+    const currentUserPosts = await getAllPost({ userId: _id });
+    const followingPosts = await UserSchema.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(_id),
+        },
+      },
+      {
+        $lookup: {
+          from: "posts",
+          localField: "following",
+          foreignField: "userId",
+          as: "followingPosts",
+        },
+      },
+      {
+        $project: {
+          followingPosts: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    res
+      .status(200)
+      .json(currentUserPosts.concat(...followingPosts[0].followingPosts))
+      .sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
