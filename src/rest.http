@@ -45,3 +45,11 @@ Content-Type: application/json
 {
     "currentId":"63c64432f5c308435b3fe402"
 }
+
+###
+PUT http://localhost:8000/user/63c0acc1158cd24d41da0b0d/unfollow
+Content-Type: application/json
+
+{
+    "currentId":"63c64432f5c308435b3fe402"
+}
